@@ -14,9 +14,9 @@ pipeline {
     stages {
         stage("First step") {
             steps {
+                sh '\'touch file1.txt file2.txt file3.txt\''
                 sh 'ssh root@srv2 \'hostname\''
                 sh 'ssh root@srv2 \'df -h\''
-                sh '\'touch file1.txt file2.txt file3.txt\''
             }
         }
         stage("Second step") {
