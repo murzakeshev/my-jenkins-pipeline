@@ -1,0 +1,31 @@
+#!groovy
+// Check srv2 properties
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("build") {
+            steps {
+                sh 'ssh root@srv2 \'touch file1.txt file2.txt file3.txt\''
+                sh 'ssh root@srv2 \'tar -zcvf commit.tar.gz file1.txt file2.txt file3.txt\''
+            }
+        }
+        stage("Test") {
+            steps {
+                sh 'ssh root@srv2 \'cat commit.tar.gz\''
+            }
+        }
+        stage("Deploy") {
+            steps {
+                sh 'ssh root@srv2 \'scp commit.tar.gz root@jenkins:/root\''
+            }
+        }
+    }
+}
