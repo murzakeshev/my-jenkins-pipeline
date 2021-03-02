@@ -19,7 +19,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh 'ssh root@srv2 \'cat commit.tar.gz\''
+                sh 'ssh root@srv2 \'ls | grep commit.tar.gz\''
             }
         }
         stage("Deploy") {
