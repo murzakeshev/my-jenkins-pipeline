@@ -21,7 +21,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh 'ssh root@srv2 \'ls | gre commit.tar.gz\''
+                sh 'ssh root@srv2 \'ls | grep commit.tar.gz\''
             }
         }
         stage("Deploy") {
